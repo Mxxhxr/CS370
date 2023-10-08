@@ -5,57 +5,69 @@ import seaborn as sb
 import matplotlib.pyplot as mplot
 from scipy import stats
 from scipy.stats import poisson
-
-# Problem 1A
-gs = np.random.normal(size=10000, loc=7.25, scale=0.875)
-
-
-# Problem 1B
-matrix = np.array([[1.0, 0.6, -0.9], [0.6, 1.0, -0.5], [-0.9, -0.5, 1.0]])
-
-APT = np.random.multivariate_normal(np.array([0, 0, 0]), matrix, size=10000)
-corAPT = np.corrcoef(APT, rowvar=False)
-
-sb.pairplot(pd.DataFrame(APT, columns=["ak", "pp", "ptime"]))
-mplot.show()
-
-mplot.hist(APT[:, 0])
-mplot.show()
+import random
+import sys
+assert sys.version_info >= (3, 7)
+from packaging import version
+import sklearn
+from pathlib import Path
+from sklearn.preprocessing import add_dummy_feature
 
 
-# Problem 1C
-cdfAPT = stats.norm.cdf(APT[:, 0], loc=0, scale=1)
-cdfAPT_for_cor = stats.norm.cdf(APT, loc=0, scale=1)
-cdf_APT_for_plot = stats.norm.cdf(
-    np.random.multivariate_normal(np.array([0, 0, 0]), matrix, size=10000)
-)
 
-mplot.hist(cdfAPT, bins=20)
-mplot.show()
 
-cor_Cdf_APT = np.corrcoef(cdfAPT_for_cor, rowvar=False)
-print(cor_Cdf_APT)
+assert version.parse(sklearn.__version__) >= version.parse("1.0.1")
 
-sb.pairplot(pd.DataFrame(cdf_APT_for_plot, columns=["ak", "pp", "ptime"]))
-mplot.show()
+############# PART 1 #############
 
-# Problem 1D
-ak = poisson.ppf(APT[:, 0], 5)
-mplot.hist(ak, bins=15)
-mplot.show()
+#turn csv into dataframe
+dataset_url = r"C:\Users\maahi\OneDrive\Desktop\Code\CS370\imports-85.csv"
+# Read the CSV file into a Pandas DataFrame
+df = pd.read_csv(dataset_url)
 
-pp = poisson.ppf(APT[:, 1], 15)
-mplot.hist(pp, bins=30)
-mplot.show()
+# Now, you can work with the 'df' DataFrame as needed
+pd.set_option('display.max_columns', None)  # Show all columns
+df.head(10)
 
-ptime = sp.stats.norm.ppf(APT[:, 2], loc=120, scale=30)
-mplot.hist(ptime)
-mplot.show()
+target_variable_column = df[['city-mpg']]
+feature_columns = df[['curb-weight', 'engine-size']]
 
-mplot.hist(gs)
-mplot.show()
+X_new = np.array([[0], [3]])
+X_new_b = add_dummy_feature(X_new)  # add x0 = 1 to each instance
 
-# Problem 1E
-df = pd.DataFrame({"ak": ak, "pp": pp, "ptime": ptime, "gs": gs})
-sb.pairplot(pd.DataFrame(df))
-mplot.show()
+
+
+
+theta_path_sgd = []
+n_epochs = 50
+t0, t1 = 5, 50  # learning schedule hyperparameters
+
+def learning_schedule(t):
+    return t0 / (t + t1)
+
+np.random.seed(42)
+theta = np.random.randn(3, 1)  # random initialization
+
+
+n_shown = 20  # extra code – just needed to generate the figure below
+mplot.figure(figsize=(6, 4))  # extra code – not needed, just formatting
+
+
+for epoch in range(n_epochs):
+    for iteration in range(len(target_variable_column)):
+
+        # extra code – these 4 lines are used to generate the figure
+        if epoch == 0 and iteration < n_shown:
+            y_predict = X_new_b @ theta
+            color = mpl.colors.rgb2hex(plt.cm.OrRd(iteration / n_shown + 0.15))
+            plt.plot(X_new, y_predict, color=color)
+
+        random_index = np.random.randint(m)
+        xi = X_b[random_index : random_index + 1]
+        yi = y[random_index : random_index + 1]
+        gradients = 2 * xi.T @ (xi @ theta - yi)  # for SGD, do not divide by m
+        eta = learning_schedule(epoch * m + iteration)
+        theta = theta - eta * gradients
+        theta_path_sgd.append(theta)  # extra code – to generate the figure
+
+
