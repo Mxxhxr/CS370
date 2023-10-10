@@ -1,3 +1,4 @@
+import matplotlib as mpl
 import pandas as pd
 import scipy as sp
 import numpy as np
@@ -12,62 +13,56 @@ from packaging import version
 import sklearn
 from pathlib import Path
 from sklearn.preprocessing import add_dummy_feature
-
-
-
-
 assert version.parse(sklearn.__version__) >= version.parse("1.0.1")
 
-############# PART 1 #############
+# Load the dataset
+dataURL = r"/Users/maahirvohra/Desktop/Code/CS370/imports-85.csv"
+data = pd.read_csv(dataURL)
 
-#turn csv into dataframe
-dataset_url = r"C:\Users\maahi\OneDrive\Desktop\Code\CS370\imports-85.csv"
-# Read the CSV file into a Pandas DataFrame
-df = pd.read_csv(dataset_url)
+# Extract the relevant columns (curb weight, engine size, and MPG)
+X = data[['curb-weight', 'engine-size']].values
+y = data['city-mpg'].values
 
-# Now, you can work with the 'df' DataFrame as needed
-pd.set_option('display.max_columns', None)  # Show all columns
-df.head(10)
+# Add a column of ones to the feature matrix for the bias term
+X_b = np.c_[np.ones((len(X), 1)), X]
 
-target_variable_column = df[['city-mpg']]
-feature_columns = df[['curb-weight', 'engine-size']]
-
-X_new = np.array([[0], [3]])
-X_new_b = add_dummy_feature(X_new)  # add x0 = 1 to each instance
-
-
-
-
-theta_path_sgd = []
-n_epochs = 50
+# Set up hyperparameters
+nEpochs = 50
 t0, t1 = 5, 50  # learning schedule hyperparameters
+alph = 0.01  # Regularization strength (L2 regularization)
 
-def learning_schedule(t):
-    return t0 / (t + t1)
+def learningSchedule(t):
+    return t0 / (t + t0)
 
 np.random.seed(42)
 theta = np.random.randn(3, 1)  # random initialization
 
+nShown = 21 # Number of lines to show in the plot (for visualization)
+thetaPathSGD = []  # To store the path of theta for plotting
 
-n_shown = 20  # extra code – just needed to generate the figure below
-mplot.figure(figsize=(6, 4))  # extra code – not needed, just formatting
+mplot.figure(figsize=(7, 4))  # Figure size for plotting
+
+for epoch in range(nEpochs):
+    for i in range(len(X)):
+
+        if epoch == 0 and i < nShown:
+            yPredict = X_b @ theta
+            color = mpl.colors.rgb2hex(mplot.cm.OrRd(i / nShown + 0.15))
+            mplot.plot(X, yPredict, color=color)
 
 
-for epoch in range(n_epochs):
-    for iteration in range(len(target_variable_column)):
-
-        # extra code – these 4 lines are used to generate the figure
-        if epoch == 0 and iteration < n_shown:
-            y_predict = X_new_b @ theta
-            color = mpl.colors.rgb2hex(plt.cm.OrRd(iteration / n_shown + 0.15))
-            plt.plot(X_new, y_predict, color=color)
-
-        random_index = np.random.randint(m)
-        xi = X_b[random_index : random_index + 1]
-        yi = y[random_index : random_index + 1]
-        gradients = 2 * xi.T @ (xi @ theta - yi)  # for SGD, do not divide by m
-        eta = learning_schedule(epoch * m + iteration)
+        randIndex = np.random.randint(len(X))
+        x1 = X_b[randIndex:randIndex + 1]
+        yi = y[randIndex:randIndex + 1]
+        gradients = 2 * x1.T @ (x1 @ theta - yi) + 2 * alph * theta  # Include L2 regularization term
+        eta = learningSchedule(epoch * len(X) + i)
         theta = theta - eta * gradients
-        theta_path_sgd.append(theta)  # extra code – to generate the figure
+        thetaPathSGD.append(theta)
 
-
+        # Plot the data points
+mplot.plot(X, y, "b.")
+mplot.xlabel("Curb Weight and Engine Size")
+mplot.ylabel("MPG", rotation=0)
+mplot.axis([0, max(X[:, 0]), min(y), max(y)])
+mplot.grid()
+mplot.show()
