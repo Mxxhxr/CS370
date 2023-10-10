@@ -29,7 +29,7 @@ X_b = np.c_[np.ones((len(X), 1)), X]
 # Set up hyperparameters
 nEpochs = 50
 t0, t1 = 5, 50  # learning schedule hyperparameters
-alph = 0.01  # Regularization strength (L2 regularization)
+alph = 0.001  # Regularization strength (L2 regularization)
 
 def learningSchedule(t):
     return t0 / (t + t0)
@@ -48,7 +48,7 @@ for epoch in range(nEpochs):
         if epoch == 0 and i < nShown:
             yPredict = X_b @ theta
             color = mpl.colors.rgb2hex(mplot.cm.OrRd(i / nShown + 0.15))
-            mplot.plot(X, yPredict, color=color)
+            mplot.plot(X_b, yPredict, color=color)
 
 
         randIndex = np.random.randint(len(X))
@@ -57,7 +57,7 @@ for epoch in range(nEpochs):
         gradients = 2 * x1.T @ (x1 @ theta - yi) + 2 * alph * theta  # Include L2 regularization term
         eta = learningSchedule(epoch * len(X) + i)
         theta = theta - eta * gradients
-        thetaPathSGD.append(theta)
+        thetaPathSGD.append(theta) 
 
         # Plot the data points
 mplot.plot(X, y, "b.")
@@ -66,3 +66,5 @@ mplot.ylabel("MPG", rotation=0)
 mplot.axis([0, max(X[:, 0]), min(y), max(y)])
 mplot.grid()
 mplot.show()
+
+print("Asked professor for help on graphing the normal distribution line and he said 'I dont know the data'. \nI've tried for the past 3 days to make it work")
