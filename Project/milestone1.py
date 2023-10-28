@@ -28,7 +28,7 @@ def download_videos_from_playlist(playlist_url, output_directory, num_videos=10)
 
 if __name__ == "__main__":
     # Specify the URL of the "60 Minutes" Interviews playlist
-    playlist_url = "https://www.youtube.com/playlist?list=PLrrfC77-pAIgNM_D-3TRo95bY5MopRNk0"
+    playlist_url = "https://www.youtube.com/watch?v=h8PSWeRLGXs&list=PLI1yx5Z0Lrv77D_g1tvF9u3FVqnrNbCRL&index=7"
     
     # Specify the output directory where the videos and captions will be saved
     output_directory = "downloaded_videos"
