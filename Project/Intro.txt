@@ -1,4 +1,0 @@
-In this project we will develop a solution that will accept as input youtube 
-videos from the 60 minutes channel and output the video
-but with spoken and writtensubtitles to another language of your choosing.
-
