@@ -28,12 +28,3 @@
 > - ***Build UI:*** Created a user-friendly UI using Hugging Face Spaces and Streamlit Spaces, accepting a YouTube video as input and producing subtitles in French.
 >   
 > - ***Create Project Pitch:*** Generated a 30-second video pitch, and uploaded it to YouTube.
->
-> 
-> **To run project:**
-```
-docker-compose up
-```
-> The captions and videos will download after execution of Python file inside Docker environment
-> 
-> I have stored the execution output in `docker-output.txt`
