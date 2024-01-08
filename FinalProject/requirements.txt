@@ -1,0 +1,6 @@
+tensorflow
+pytube
+youtube-transcript-api
+openai-whisper
+textblob
+pyttsx3

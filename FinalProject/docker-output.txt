@@ -1,0 +1,92 @@
+[+] Building 1.2s (17/17) FINISHED                                                                                                                                                             docker:default
+ => [app internal] load build definition from Dockerfile                                                                                                                                                 0.0s
+ => => transferring dockerfile: 435B                                                                                                                                                                     0.0s
+ => [app internal] load .dockerignore                                                                                                                                                                    0.0s
+ => => transferring context: 2B                                                                                                                                                                          0.0s
+ => [app internal] load metadata for docker.io/tensorflow/tensorflow:latest-gpu                                                                                                                          0.5s
+ => [app auth] tensorflow/tensorflow:pull token for registry-1.docker.io                                                                                                                                 0.0s
+ => [app  1/11] FROM docker.io/tensorflow/tensorflow:latest-gpu@sha256:64602abcd8cc4f4bdd6268ca0abc39e6d37113d700886afd15f6dd151210b206                                                                  0.0s
+ => [app internal] load build context                                                                                                                                                                    0.0s
+ => => transferring context: 3.37kB                                                                                                                                                                      0.0s
+ => CACHED [app  2/11] COPY ./requirements.txt /requirements.txt                                                                                                                                         0.0s
+ => CACHED [app  3/11] RUN apt-get update                                                                                                                                                                0.0s
+ => CACHED [app  4/11] RUN apt-get install sudo -y build-essential     python3-pip     python3-dev                                                                                                       0.0s
+ => CACHED [app  5/11] RUN pip install --no-cache-dir -r requirements.txt                                                                                                                                0.0s
+ => CACHED [app  6/11] RUN sudo apt install ffmpeg -y                                                                                                                                                    0.0s 
+ => CACHED [app  7/11] RUN apt-get clean                                                                                                                                                                 0.0s 
+ => CACHED [app  8/11] RUN mkdir /src                                                                                                                                                                    0.0s 
+ => CACHED [app  9/11] WORKDIR /src                                                                                                                                                                      0.0s 
+ => [app 10/11] COPY ./src /src                                                                                                                                                                          0.0s 
+ => [app 11/11] RUN adduser user                                                                                                                                                                         0.5s 
+ => [app] exporting to image                                                                                                                                                                             0.0s 
+ => => exporting layers                                                                                                                                                                                  0.0s 
+ => => writing image sha256:833f63af72522202736820ced21cf9586b879a1b6a1da2a4cd5a63600b0d38a8                                                                                                             0.0s 
+ => => naming to docker.io/library/cs370-project-group3-app                                                                                                                                              0.0s 
+[+] Running 2/2
+ ✔ Network cs370-project-group3_default  Created                                                                                                                                                         0.3s 
+ ✔ Container cs370-project-group3-app-1  Created                                                                                                                                                         0.0s 
+Attaching to cs370-project-group3-app-1
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/torch/cuda/__init__.py:107: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 34: CUDA driver is a stub library (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:109.)
+cs370-project-group3-app-1  |   return torch._C._cuda_getDeviceCount() > 0
+100%|███████████████████████████████████████| 139M/139M [00:10<00:00, 13.9MiB/s]
+cs370-project-group3-app-1  | Created  audios/OA2Tj75T3fI.mp3
+cs370-project-group3-app-1  | Created  captions/OA2Tj75T3fI.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/OA2Tj75T3fI.txt
+cs370-project-group3-app-1  | Created  french-text/OA2Tj75T3fI.txt
+cs370-project-group3-app-1  | Created  audios/mAFv55o47ok.mp3
+cs370-project-group3-app-1  | Created  captions/mAFv55o47ok.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/mAFv55o47ok.txt
+cs370-project-group3-app-1  | Created  french-text/mAFv55o47ok.txt
+cs370-project-group3-app-1  | Created  audios/oFVuQ0RP_As.mp3
+cs370-project-group3-app-1  | Created  captions/oFVuQ0RP_As.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/oFVuQ0RP_As.txt
+cs370-project-group3-app-1  | Created  french-text/oFVuQ0RP_As.txt
+cs370-project-group3-app-1  | Created  audios/4aPp8KX6EiU.mp3
+cs370-project-group3-app-1  | Created  captions/4aPp8KX6EiU.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/4aPp8KX6EiU.txt
+cs370-project-group3-app-1  | Created  french-text/4aPp8KX6EiU.txt
+cs370-project-group3-app-1  | Created  audios/h8PSWeRLGXs.mp3
+cs370-project-group3-app-1  | Created  captions/h8PSWeRLGXs.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/h8PSWeRLGXs.txt
+cs370-project-group3-app-1  | Created  french-text/h8PSWeRLGXs.txt
+cs370-project-group3-app-1  | Created  audios/Y9nM_9oBj2k.mp3
+cs370-project-group3-app-1  | Created  captions/Y9nM_9oBj2k.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/Y9nM_9oBj2k.txt
+cs370-project-group3-app-1  | Created  french-text/Y9nM_9oBj2k.txt
+cs370-project-group3-app-1  | Created  audios/ervLwxz7xPo.mp3
+cs370-project-group3-app-1  | Created  captions/ervLwxz7xPo.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/ervLwxz7xPo.txt
+cs370-project-group3-app-1  | Created  french-text/ervLwxz7xPo.txt
+cs370-project-group3-app-1  | Created  audios/Xw5dQBZavUw.mp3
+cs370-project-group3-app-1  | Created  captions/Xw5dQBZavUw.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/Xw5dQBZavUw.txt
+cs370-project-group3-app-1  | Created  french-text/Xw5dQBZavUw.txt
+cs370-project-group3-app-1  | Created  audios/C2M7j0UuMFY.mp3
+cs370-project-group3-app-1  | Created  captions/C2M7j0UuMFY.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/C2M7j0UuMFY.txt
+cs370-project-group3-app-1  | Created  french-text/C2M7j0UuMFY.txt
+cs370-project-group3-app-1  | Created  audios/bNKdlnoAqIs.mp3
+cs370-project-group3-app-1  | Created  captions/bNKdlnoAqIs.txt
+cs370-project-group3-app-1  | /usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:115: UserWarning: FP16 is not supported on CPU; using FP32 instead
+cs370-project-group3-app-1  |   warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+cs370-project-group3-app-1  | Created  audio-to-text/bNKdlnoAqIs.txt
+cs370-project-group3-app-1  | Created  french-text/bNKdlnoAqIs.txt
+cs370-project-group3-app-1 exited with code 0
